@@ -1,0 +1,17 @@
+1- load spirtes
+2- generate maze
+3- random generation enemies
+4- moves - user controls (keyboard)
+5- collision detection (wall/enemies/coins)
+6- score system
+7- lifes
+8- users db and top ten panel
+9- add 8-bit background music
+10- change fonts to Atari font face (pacfont)
+11- front-end edits
+
+-> !!! we need to :
+use one of the different color palette depending on the television signal format.
+• NTSC format uses 128 color palette
+• PAL uses 104 color palette
+• SECAM uses only 8 colors

@@ -1,0 +1,15 @@
+@font-face{ 
+	font-family: 'pacFont';
+	src: url('assets/fonts/pac-font.eot');
+	src: url('assets/fonts/pac-font.eot?#iefix') format('embedded-opentype'),
+	     url('assets/fonts/pac-font.woff') format('woff'),
+	     url('assets/fonts/pac-font.ttf') format('truetype');
+}
+body
+{
+	padding: 0px;
+	margin: 0px;
+	background: #000000;
+    font-family: 'pacFont';
+    color: #ffffff;
+}
