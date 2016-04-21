@@ -1,11 +1,11 @@
-1-create sprites
+~1-create sprites
 ~2-load sprites
 3- generate maze 	 
 4- random generation enemies
 ~5- moves - user controls (keyboard)
 6- collision detection 
 ~	a. maze		
-	b. enemies	
+~	b. enemies	
 	c. coins	
 7- score system 	
 8- lifes		
