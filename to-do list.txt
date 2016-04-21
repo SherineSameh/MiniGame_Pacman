@@ -1,14 +1,18 @@
-1- load spirtes
-2- generate maze
-3- random generation enemies
-4- moves - user controls (keyboard)
-5- collision detection (wall/enemies/coins)
-6- score system
-7- lifes
-8- users db and top ten panel
-9- add 8-bit background music
-10- change fonts to Atari font face (pacfont)
-11- front-end edits
+1-create sprites
+~2-load sprites
+3- generate maze 	 
+4- random generation enemies
+~5- moves - user controls (keyboard)
+6- collision detection 
+~	a. maze		
+	b. enemies	
+	c. coins	
+7- score system 	
+8- lifes		
+9- users db and top ten panel
+10- add 8-bit background music
+11- change fonts to Atari font face (pacfont)
+12- front-end edits
 
 -> !!! we need to :
 use one of the different color palette depending on the television signal format.
