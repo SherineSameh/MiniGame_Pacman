@@ -2,7 +2,7 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create
 
 function preload() {
     
-    game.load.image('sky', 'assets/images/sky.png');
+
     game.load.spritesheet('pacman', 'assets/images/pacman.png', 40, 40);
     game.load.spritesheet('pinky', 'assets/images/pinky.png', 40, 40);
     game.load.spritesheet('blinky', 'assets/images/blinky.png', 40, 40);
@@ -32,9 +32,7 @@ function create() {
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
     
-    //Background
-    game.add.sprite(0, 0, 'sky');
-
+   
     map = window._map = game.add.tilemap('myTilemap');
     map.addTilesetImage('tile', 'Tile');
     map.setCollision(1 , true , layer ); // 1 is the gid 
