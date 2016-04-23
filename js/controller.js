@@ -9,18 +9,13 @@ function preload() {
     game.load.spritesheet('inkey', 'assets/images/inkey.png', 40, 40);
     game.load.spritesheet('clyde', 'assets/images/clyde.png', 40, 40);
     game.load.spritesheet('dead_pacman', 'assets/images/dead_pacman.png', 40, 40);
-<<<<<<< HEAD
 
     game.load.audio('intro', 'assets/sounds/intro.wav');
     game.load.audio('eatdot', 'assets/sounds/eatdot.mp3');    
     game.load.audio('pacend', 'assets/sounds/pacend.mp3');
 
-    game.load.tilemap('myTilemap','assets/tilemaps/Pacman-Map.json',  null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('Tile','assets/tilemaps/tile.png');
-=======
     game.load.tilemap('myTilemap','assets/tilemaps/Pacman-Map3.json',  null, Phaser.Tilemap.TILED_JSON);
     game.load.image('Tile','assets/tilemaps/tile_40_40.png');
->>>>>>> origin/master
 }
 
 var player,enemies,Pinky,Blinky,Inkey,Clyde,Dead,
