@@ -2,10 +2,7 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create
 
 function preload() {
     
-
-    //game.load.image('sky', 'assets/images/sky.png');
-    //game.load.image('ground', 'assets/images/platform.png');
-    game.load.spritesheet('pac-man', 'assets/images/pacman.png', 30, 30);
+    game.load.spritesheet('pacman', 'assets/images/pacman.png', 30, 30);
     game.load.spritesheet('pinky', 'assets/images/pinky.png', 30, 30);
     game.load.spritesheet('blinky', 'assets/images/blinky.png', 30, 30);
     game.load.spritesheet('inkey', 'assets/images/inkey.png', 30, 30);
@@ -13,25 +10,28 @@ function preload() {
     game.load.spritesheet('dead_pacman', 'assets/images/dead_pacman.png', 30, 30);
     game.load.tilemap('myTilemap','assets/tilemaps/Pacman-Map3.json',  null, Phaser.Tilemap.TILED_JSON);
     game.load.image('Tile','assets/tilemaps/tile_40_40.png');
+
+
+    game.load.audio('intro', 'assets/sounds/intro.wav');
+    game.load.audio('doteat', 'assets/sounds/doteat.mp3');    
+    game.load.audio('pacend', 'assets/sounds/pacend.mp3');
+
 }
 
 var player,enemies,Pinky,Blinky,Inkey,Clyde,Dead;
-var platform;
-var cursor;
-var map ;
-var layer ; 
+var cursor,music, map,layer;
+
 function create() {
+
+    music = game.add.audio('intro');
+    music.loop = true;
+    music.play();
+
+    spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    spaceKey.onDown.add(togglePause, this);
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
     
-    //Background
-    //game.add.sprite(0, 0, 'sky');
-
-    //!!!! MAZE !!!! (must be generated) 
-    //platform = game.add.group(); //group contains all the maze parts
-    //platform.enableBody = true;  //enable physics for any object in this group
-    //var ground = platform.create(400, 400, 'ground');
-    //ground.body.immovable = true; //This stops it from falling away when you jump on it
     map = window._map = game.add.tilemap('myTilemap');
     map.addTilesetImage('tile', 'Tile');
     map.setCollision(1 , true , layer ); // 1 is the gid 
@@ -42,7 +42,7 @@ function create() {
     
 
     //Player:
-    player = game.add.sprite(0, game.world.height-100, 'pac-man');
+    player = game.add.sprite(0, game.world.height-100, 'pacman');
     game.physics.arcade.enable(player); //enable physics on the player
     player.body.collideWorldBounds = true;
 
@@ -57,16 +57,17 @@ function create() {
     enemies = game.add.group();
     enemies.enableBody = true;
 
+    enemies.callAll('animations.add', 'animations', 'top', [0,1], 10, true);
+    enemies.callAll('animations.add', 'animations', 'down', [2,3], 10, true);
+    enemies.callAll('animations.add', 'animations', 'right', [4,5], 10, true);
+    enemies.callAll('animations.add', 'animations', 'left', [6,7], 10, true);
+
+
     //generate Pinky
     for (var i = 0; i < 3; i++)
     {
         Pinky = enemies.create(i *70, 50, 'pinky');
-        Pinky.body.collideWorldBounds = true;
-
-        Pinky.animations.add('left', [6,7], 10, true);
-        Pinky.animations.add('right', [4,5], 10, true);
-        Pinky.animations.add('top', [0,1], 10, true);
-        Pinky.animations.add('down', [2,3], 10, true);
+        // Pinky.body.collideWorldBounds = true;
 
         //must be change!! generate random moves according to the available ones in the maze
         Pinky.body.velocity.x=0;
@@ -79,13 +80,6 @@ function create() {
         Inkey = enemies.create(100, i*50, 'inkey');
         //must fix world collision !!
         // Inkey.body.collideWorldBounds = true;
-
-        Inkey.animations.add('left', [6,7], 10, true);
-        Inkey.animations.add('right', [4,5], 10, true);
-        Inkey.animations.add('top', [0,1], 10, true);
-        Inkey.animations.add('down', [2,3], 10, true);
-
-        //must be change!! generate random moves according to the available ones in the maze
         Inkey.body.velocity.y=0;
         Inkey.body.velocity.y+= 50;
         Inkey.animations.play('down');
@@ -138,20 +132,24 @@ function update() {
     
 }
 
-function loose (player,enemy) {
+function loose (player,enemy)
+{
     
     Dead = game.add.sprite(player.body.x, player.body.y, 'dead_pacman');
-    Dead.animations.add('done', [0,1,2,3,4,5,6,7,8,9,10], 10, true);    
+    Dead.animations.add('done', [0,1,2,3,4,5,6,7,8,9,10,11], 10, true);    
     player.kill();
     Dead.animations.play('done');
-    enemy.body.velocity.x=0;
-    enemy.body.velocity.y=0;
-    game.time.events.add(Phaser.Timer.SECOND *1 , disapear, this);
-    
+    var Endmusic = game.add.audio('pacend');
+    Endmusic.play();
+    game.time.events.add(Phaser.Timer.SECOND*1.1 , disapear, this);
+}
 
-    }
 function disapear()
 { 
     Dead.kill(); 
-    game.paused=true;
+}
+
+function togglePause() {
+
+    game.physics.arcade.isPaused = (game.physics.arcade.isPaused) ? false : true;
 }
