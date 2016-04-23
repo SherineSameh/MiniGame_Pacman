@@ -11,8 +11,8 @@ function preload() {
     game.load.spritesheet('inkey', 'assets/images/inkey.png', 40, 40);
     game.load.spritesheet('clyde', 'assets/images/clyde.png', 40, 40);
     game.load.spritesheet('dead_pacman', 'assets/images/dead_pacman.png', 40, 40);
-    game.load.tilemap('myTilemap','assets/tilemaps/Pacman-Map.json',  null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('Tile','assets/tilemaps/tile.png');
+    game.load.tilemap('myTilemap','assets/tilemaps/Pacman-Map3.json',  null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('Tile','assets/tilemaps/tile_40_40.png');
 }
 
 var player,enemies,Pinky,Blinky,Inkey,Clyde,Dead;
@@ -34,7 +34,7 @@ function create() {
     //ground.body.immovable = true; //This stops it from falling away when you jump on it
     map = window._map = game.add.tilemap('myTilemap');
     map.addTilesetImage('tile', 'Tile');
-    map.setCollision(1 , true, layer ); // 1 is the gid 
+    map.setCollision(1 , true , layer ); // 1 is the gid 
       layer = map.createLayer('Tile Layer 1');          
       layer.resizeWorld();          
       layer.debug = true;
