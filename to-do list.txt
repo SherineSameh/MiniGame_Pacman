@@ -1,31 +1,13 @@
-Basic tasks:
-------------
-~1-create sprites
-~2-load sprites
-~3- generate maze 
-4- load maze , movement inside it and collision detection !!!!	 
-~5- random generation enemies
-~6- moves - user controls (keyboard)
-~7- collision detection 	
-~	b. enemies	
-	c. coins	
-8- score system 	
-9- lifes		
-10- users db and top ten panel
-~11- add 8-bit background music
-~12- change fonts to Atari font face (pacfont)
-~13- front end:Splash Screen
-(Fakes) 14- use one of the different color palette depending on the television signal format. 
--------------------------------------------------------------------------------------
-Advanced tasks:
----------------
-Design:
--------
-2- loading assets with progress bar
-~3- options screen
-
-Game:
------
+Remaining tasks:
+----------------
+1- fix enemies moves 
+2- eat dots (collision)
+3- lifes
+4- score system
+5- db and top ten panel
+6- menu (pause / back / life / score)
+------------------------------------------------------------------------
+EXTRA:
+------
 1- many maze levels
 2- different interaction with enemies (eat them /make them transparent)
-~3- actions sounds
