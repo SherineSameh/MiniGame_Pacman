@@ -8,8 +8,9 @@ function preload() {
     game.load.spritesheet('inkey', 'assets/images/inkey.png', 30, 30);
     game.load.spritesheet('clyde', 'assets/images/clyde.png', 30, 30);
     game.load.spritesheet('dead_pacman', 'assets/images/dead_pacman.png', 30, 30);
-    game.load.tilemap('myTilemap','assets/tilemaps/Pacman-Map3.json',  null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('Tile','assets/tilemaps/tile_40_40.png');
+    game.load.tilemap('myTilemap','assets/tilemaps/Pacman-Map4.json',  null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('Tile','assets/tilemaps/tile.png');
+    game.load.image('Dot','assets/tilemaps/dot.png')
 
 
     game.load.audio('intro', 'assets/sounds/intro.wav');
@@ -19,7 +20,7 @@ function preload() {
 }
 
 var player,enemies,Pinky,Blinky,Inkey,Clyde,Dead;
-var cursor,music, map,layer;
+var cursor,music, map,layer1,layer2;
 
 function create() {
 
@@ -34,11 +35,15 @@ function create() {
     
     map = window._map = game.add.tilemap('myTilemap');
     map.addTilesetImage('tile', 'Tile');
-    map.setCollision(1 , true , layer ); // 1 is the gid 
+     map.addTilesetImage('dots', 'Dot');
+    map.setCollision(1 , true , layer1 );
+    map.setCollision(2 , true , layer2 ); // 1 is the gid // check the gid  
       layer = map.createLayer('Tile Layer 1');          
       layer.resizeWorld();          
       layer.debug = true;
-      
+      layer2 = map.createLayer('Tile Layer 2');          
+      layer2.resizeWorld();          
+      layer2.debug = true;
     
 
     //Player:
@@ -96,7 +101,7 @@ function update() {
     game.physics.arcade.collide(player, layer); //Collide the player with the platform
     game.physics.arcade.collide(enemies, layer);
     game.physics.arcade.overlap(player, enemies, loose, null, this); //Collide the player with enemies and loose
-
+    game.physics.arcade.overlap(player, layer2,  Dotkill, null, this);
     //initialize the movement
     player.body.velocity.x = 0;
     player.body.velocity.y = 0;
@@ -152,4 +157,10 @@ function disapear()
 function togglePause() {
 
     game.physics.arcade.isPaused = (game.physics.arcade.isPaused) ? false : true;
+}
+
+function Dotkill (player,layer2) {
+
+//layer2.tile.kill();
+map.removeTile();
 }
