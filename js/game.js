@@ -14,6 +14,14 @@ Game.prototype = {
     game.load.spritesheet('inkey', 'assets/images/inkey.png', 30, 30);
     game.load.spritesheet('clyde', 'assets/images/clyde.png', 30, 30);
     game.load.spritesheet('dead_pacman', 'assets/images/dead_pacman.png', 30, 30);
+    
+    game.load.image('menu_bar','assets/images/menu_bar.png');
+    game.load.image('score_label','assets/images/score_label.png');
+    game.load.image('back_icon','assets/images/back_icon.png');
+    game.load.image('life','assets/images/life.png');
+    game.load.spritesheet('play_mute_icon', 'assets/images/play_mute_icon.png', 40, 40);
+    game.load.spritesheet('pause_play_icon', 'assets/images/pause_play_icon.png', 40, 40);
+
     game.load.tilemap('myTilemap','assets/tilemaps/Pacman-Map4.json',  null, Phaser.Tilemap.TILED_JSON);
     game.load.image('Tile','assets/tilemaps/tile.png');
     game.load.image('Dot','assets/tilemaps/dot.png')
@@ -24,12 +32,41 @@ Game.prototype = {
 },
   create: function () {
  
-    // music = game.add.audio('intro');
-    // music.loop = true;
-    // music.play();
+    var playMusic = gameOptions.playMusic;
 
-    spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    spaceKey.onDown.add(togglePause, this);
+    back = game.add.sprite(745,8.5,'back_icon');
+    back.inputEnabled = true;
+    back.events.onInputUp.add(
+      function () 
+      {
+        game.state.start("Menu");
+      });
+
+    playState = game.add.sprite(695,4.5,'pause_play_icon');
+    playState.frame = (game.physics.arcade.isPaused) ? 0 : 1;
+    playState.inputEnabled = true;
+    playState.events.onInputUp.add(
+    function () 
+    {
+        game.physics.arcade.isPaused = !game.physics.arcade.isPaused;
+        playState.frame = (game.physics.arcade.isPaused) ? 1 : 0;     
+    });
+
+
+    musicState= game.add.sprite(645,4.5,'play_mute_icon');
+    musicState.frame = playMusic ? 1 : 0;
+    musicState.inputEnabled = true;
+    musicState.events.onInputUp.add(
+      function () 
+      {
+      playMusic=!playMusic;
+      musicState.frame = playMusic ? 0 : 1;
+      music.volume = playMusic ? 0 : 1;
+      });
+
+
+    // spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    // spaceKey.onDown.add(togglePause, this);
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
     map = window._map = game.add.tilemap('myTilemap');
@@ -50,6 +87,10 @@ Game.prototype = {
     Dots.setAll('x', 6, false, false, 1);
     Dots.setAll('y', 6, false, false, 1);
 
+    life = game.add.physicsGroup(Phaser.Physics.ARCADE);
+    for (var i = 0 ; i < 3; i++) {
+        life.create(595 - i*40, 8.5, 'life');
+    };
 
     //Player:
     player = game.add.sprite(0, game.world.height-100, 'pacman');
@@ -65,32 +106,77 @@ Game.prototype = {
     //player.play('munch');
     
     //Enemies:
-    enemies = game.add.physicsGroup(Phaser.Physics.ARCADE);
-    enemies.setAll('body.collideWorldBounds', true);
+   enemies = game.add.physicsGroup(Phaser.Physics.ARCADE);
+    // enemies.setAll('body.collideWorldBounds', true);
 
-    enemies.callAll('animations.add', 'animations', 'top', [0,1], 10, true);
-    enemies.callAll('animations.add', 'animations', 'down', [2,3], 10, true);
-    enemies.callAll('animations.add', 'animations', 'right', [4,5], 10, true);
-    enemies.callAll('animations.add', 'animations', 'left', [6,7], 10, true);
+    // enemies.callAll('animations.add', 'animations', 'top', [0,1], 10, true);
+    // enemies.callAll('animations.add', 'animations', 'down', [2,3], 10, true);
+    // enemies.callAll('animations.add', 'animations', 'right', [4,5], 10, true);
+    // enemies.callAll('animations.add', 'animations', 'left', [6,7], 10, true);
 
 
-    //generate Pinky
-    for (var i = 0; i < 3; i++)
+    for (var i = 0; i < 4; i++)
     {
         Pinky = enemies.create(game.world.randomX, game.world.randomY, 'pinky');
+        Pinky.body.collideWorldBounds = true;
+
+        Pinky.animations.add('left', [6,7], 10, true);
+        Pinky.animations.add('right', [4,5], 10, true);
+        Pinky.animations.add('top', [0,1], 10, true);
+        Pinky.animations.add('down', [2,3], 10, true);
+
         Pinky.body.velocity.x=0;
         Pinky.body.velocity.x += 50;
         Pinky.animations.play('left');
     }
 
-    for (var i = 0; i < 5; i++)
+    for (var i = 0; i < 4; i++)
     {
         Inkey = enemies.create(game.world.randomX, game.world.randomY, 'inkey');
+        Inkey.body.collideWorldBounds = true;
+
+        Inkey.animations.add('left', [6,7], 10, true);
+        Inkey.animations.add('right', [4,5], 10, true);
+        Inkey.animations.add('top', [0,1], 10, true);
+        Inkey.animations.add('down', [2,3], 10, true);
+
         Inkey.body.velocity.y=0;
         Inkey.body.velocity.y+= 50;
         Inkey.animations.play('down');
     }
     
+
+    for (var i = 0; i < 4; i++)
+    {
+        Blinky = enemies.create(game.world.randomX, game.world.randomY, 'blinky');
+        Blinky.body.collideWorldBounds = true;
+
+        Blinky.animations.add('left', [6,7], 10, true);
+        Blinky.animations.add('right', [4,5], 10, true);
+        Blinky.animations.add('top', [0,1], 10, true);
+        Blinky.animations.add('down', [2,3], 10, true);
+
+        Blinky.body.velocity.y=0;
+        Blinky.body.velocity.y-= 50;
+        Blinky.animations.play('top');
+    }
+
+
+    for (var i = 0; i < 4; i++)
+    {
+        Clyde = enemies.create(game.world.randomX, game.world.randomY, 'clyde');
+        Clyde.body.collideWorldBounds = true;
+
+        Clyde.animations.add('left', [6,7], 10, true);
+        Clyde.animations.add('right', [4,5], 10, true);
+        Clyde.animations.add('top', [0,1], 10, true);
+        Clyde.animations.add('down', [2,3], 10, true);
+
+        Clyde.body.velocity.x=0;
+        Clyde.body.velocity.x-= 50;
+        Clyde.animations.play('right');
+    }
+ 
 
     // keyboard controller
     cursor = game.input.keyboard.createCursorKeys();

@@ -1,13 +1,10 @@
 Remaining tasks:
 ----------------
-1- fix enemies moves 
-2- eat dots (collision)
-3- lifes
-4- score system
-5- db and top ten panel
-6- menu (pause / back / life / score)
+1- fix enemies moves - myriam
+3- display changes life/ score + game over/win - sherine
+5- db and top ten panel - passant
 ------------------------------------------------------------------------
 EXTRA:
 ------
-1- many maze levels
+1- many maze levels myriam
 2- different interaction with enemies (eat them /make them transparent)
