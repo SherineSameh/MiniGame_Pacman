@@ -1,6 +1,12 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var Game = function () {};
 
-function preload() {
+var player,enemies,Pinky,Blinky,Inkey,Clyde,Dead,
+cursor,
+map,layer1,layer2;
+ 
+Game.prototype = {
+
+  preload: function () {
     
     game.load.spritesheet('pacman', 'assets/images/pacman.png', 30, 30);
     game.load.spritesheet('pinky', 'assets/images/pinky.png', 30, 30);
@@ -11,28 +17,21 @@ function preload() {
     game.load.tilemap('myTilemap','assets/tilemaps/Pacman-Map4.json',  null, Phaser.Tilemap.TILED_JSON);
     game.load.image('Tile','assets/tilemaps/tile.png');
     game.load.image('Dot','assets/tilemaps/dot.png')
-
-
-    game.load.audio('intro', 'assets/sounds/intro.wav');
+    
     game.load.audio('doteat', 'assets/sounds/doteat.mp3');    
     game.load.audio('pacend', 'assets/sounds/pacend.mp3');
 
-}
-
-var player,enemies,Pinky,Blinky,Inkey,Clyde,Dead;
-var cursor,music, map,layer1,layer2;
-
-function create() {
-
-    music = game.add.audio('intro');
-    music.loop = true;
-    music.play();
+},
+  create: function () {
+ 
+    // music = game.add.audio('intro');
+    // music.loop = true;
+    // music.play();
 
     spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     spaceKey.onDown.add(togglePause, this);
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
-    
     map = window._map = game.add.tilemap('myTilemap');
     map.addTilesetImage('tile', 'Tile');
      map.addTilesetImage('dots', 'Dot');
@@ -58,9 +57,10 @@ function create() {
 
     //player.animations.add('munch', [0, 1, 2, 1], 20, true);
     //player.play('munch');
+    
     //Enemies:
-    enemies = game.add.group();
-    enemies.enableBody = true;
+    enemies = game.add.physicsGroup(Phaser.Physics.ARCADE);
+    enemies.setAll('body.collideWorldBounds', true);
 
     enemies.callAll('animations.add', 'animations', 'top', [0,1], 10, true);
     enemies.callAll('animations.add', 'animations', 'down', [2,3], 10, true);
@@ -71,10 +71,7 @@ function create() {
     //generate Pinky
     for (var i = 0; i < 3; i++)
     {
-        Pinky = enemies.create(i *70, 50, 'pinky');
-        // Pinky.body.collideWorldBounds = true;
-
-        //must be change!! generate random moves according to the available ones in the maze
+        Pinky = enemies.create(game.world.randomX, game.world.randomY, 'pinky');
         Pinky.body.velocity.x=0;
         Pinky.body.velocity.x += 50;
         Pinky.animations.play('left');
@@ -82,9 +79,7 @@ function create() {
 
     for (var i = 0; i < 5; i++)
     {
-        Inkey = enemies.create(100, i*50, 'inkey');
-        //must fix world collision !!
-        // Inkey.body.collideWorldBounds = true;
+        Inkey = enemies.create(game.world.randomX, game.world.randomY, 'inkey');
         Inkey.body.velocity.y=0;
         Inkey.body.velocity.y+= 50;
         Inkey.animations.play('down');
@@ -93,15 +88,17 @@ function create() {
 
     // keyboard controller
     cursor = game.input.keyboard.createCursorKeys();
-    
-}
 
-function update() {
+    
+},
+
+update: function() {
     
     game.physics.arcade.collide(player, layer); //Collide the player with the platform
     game.physics.arcade.collide(enemies, layer);
     game.physics.arcade.overlap(player, enemies, loose, null, this); //Collide the player with enemies and loose
     game.physics.arcade.overlap(player, layer2,  Dotkill, null, this);
+    game.physics.arcade.collide(enemies);
     //initialize the movement
     player.body.velocity.x = 0;
     player.body.velocity.y = 0;
@@ -136,27 +133,41 @@ function update() {
     }
     
 }
+};
+
 
 function loose (player,enemy)
-{
-    
+{ 
+
     Dead = game.add.sprite(player.body.x, player.body.y, 'dead_pacman');
-    Dead.animations.add('done', [0,1,2,3,4,5,6,7,8,9,10,11], 10, true);    
-    player.kill();
+    Dead.animations.add('done', [0,1,2,3,4,5,6,7,8,9,10], 10, true);   
     Dead.animations.play('done');
+    player.kill();
+    // music.volume = music.mute ? 0 : 0.1;
     var Endmusic = game.add.audio('pacend');
     Endmusic.play();
+
     game.time.events.add(Phaser.Timer.SECOND*1.1 , disapear, this);
 }
 
 function disapear()
 { 
     Dead.kill(); 
-}
 
+    // music.volume = music.mute ? 0 : 1;
+}
 function togglePause() {
 
     game.physics.arcade.isPaused = (game.physics.arcade.isPaused) ? false : true;
+    if(game.physics.arcade.isPaused)
+    {
+        music.mute = true;
+        player.animations.stop();
+        player.frame=player.currentFrame;
+    }
+    else
+        music.mute = false;
+
 }
 
 function Dotkill (player,layer2) {

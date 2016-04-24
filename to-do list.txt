@@ -13,20 +13,16 @@ Basic tasks:
 9- lifes		
 10- users db and top ten panel
 ~11- add 8-bit background music
-12- change fonts to Atari font face (pacfont)
-13- front end:Splash Screen
-
--> !!! use one of the different color palette depending on the television signal format.
-• NTSC format uses 128 color palette
-• PAL uses 104 color palette
-• SECAM uses only 8 colors
+~12- change fonts to Atari font face (pacfont)
+~13- front end:Splash Screen
+(Fakes) 14- use one of the different color palette depending on the television signal format. 
 -------------------------------------------------------------------------------------
 Advanced tasks:
 ---------------
 Design:
 -------
 2- loading assets with progress bar
-3- options screen
+~3- options screen
 
 Game:
 -----
