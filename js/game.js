@@ -2,7 +2,7 @@ var Game = function () {};
 
 var player,enemies,Pinky,Blinky,Inkey,Clyde,Dead,
 cursor,
-map,layer1,layer2;
+map,layer1,layer2 , Dots;
  
 Game.prototype = {
 
@@ -36,14 +36,20 @@ Game.prototype = {
     map.addTilesetImage('tile', 'Tile');
      map.addTilesetImage('dots', 'Dot');
     map.setCollision(1 , true , layer1 );
-    map.setCollision(2 , true , layer2 ); // 1 is the gid // check the gid  
+    map.setCollision(2 , true , layer2 ); // 1 is the gid  
       layer = map.createLayer('Tile Layer 1');          
       layer.resizeWorld();          
       layer.debug = true;
       layer2 = map.createLayer('Tile Layer 2');          
-      layer2.resizeWorld();          
-      layer2.debug = true;
-    
+     // layer2.resizeWorld();          
+      //layer2.debug = true;
+      
+    Dots = game.add.physicsGroup();
+    //map.safetile;
+    map.createFromTiles(2,255, 'Dot', layer2, Dots); // check parameters 
+    Dots.setAll('x', 6, false, false, 1);
+    Dots.setAll('y', 6, false, false, 1);
+
 
     //Player:
     player = game.add.sprite(0, game.world.height-100, 'pacman');
@@ -97,7 +103,8 @@ update: function() {
     game.physics.arcade.collide(player, layer); //Collide the player with the platform
     game.physics.arcade.collide(enemies, layer);
     game.physics.arcade.overlap(player, enemies, loose, null, this); //Collide the player with enemies and loose
-    game.physics.arcade.overlap(player, layer2,  Dotkill, null, this);
+   // game.physics.arcade.overlap(player, layer2,  Dotkill, null, this);
+    game.physics.arcade.overlap(player, Dots, DOtkill , null, this);
     game.physics.arcade.collide(enemies);
     //initialize the movement
     player.body.velocity.x = 0;
@@ -132,7 +139,18 @@ update: function() {
           player.animations.stop();
     }
     
-}
+} /*, 
+
+eatDot: function (player, dot) 
+{
+  dot.kill();
+
+    if (Dots.total === 0)
+    {
+        Dots.callAll('revive');
+    }
+
+}*/
 };
 
 
@@ -170,8 +188,13 @@ function togglePause() {
 
 }
 
-function Dotkill (player,layer2) {
+function DOtkill (player,Dots ) {
+    score +=100 ;
+    Dots.kill();
 
-//layer2.tile.kill();
-map.removeTile();
+if (Dots.total === 0) // 3ashan yetala3 einno keseb 
+    {
+       // call another level or you won 
+    }
+
 }

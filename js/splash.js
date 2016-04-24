@@ -1,5 +1,6 @@
 var
-  game = new Phaser.Game(800, 600, Phaser.AUTO, 'game'),
+  game = new Phaser.Game(780, 600, Phaser.AUTO, 'game'),
+  score = 0 , 
   splash = function () {},
   gameOptions = {
     playSound: true,
@@ -50,7 +51,7 @@ splash.prototype = {
     
     setTimeout(function () {
       game.state.start("Menu");
-    }, 500);    
+    }, 1000);    
   }
  };
 
