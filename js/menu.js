@@ -1,4 +1,6 @@
 var Menu = function() {};
+var score = 0 , scoreText,
+life=3,finalscore = 0 , lifeText;
 
 Menu.prototype = {
 

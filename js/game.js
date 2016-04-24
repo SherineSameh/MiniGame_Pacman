@@ -2,10 +2,7 @@ var Game = function () {};
 
 var player,enemies,Pinky,Blinky,Inkey,Clyde,Dead,
 cursor,
-map,layer1,layer2 , Dots,
-score = 0 , scoreText,
-
-life=3,finalscore = 0 , lifeText;
+map,layer1,layer2 , Dots;
 
 Game.prototype = {
 
@@ -42,6 +39,8 @@ Game.prototype = {
     back.events.onInputUp.add(
       function () 
       {
+        score = 0 ;
+        life=3;
         game.state.start("Menu");
       });
 
@@ -283,3 +282,7 @@ if (Dots.total === 0)
     }
 
 }
+// function ChangeDirection (enemies,layer)
+// {
+//     game.world.randomX, game.world.randomY    
+// }
