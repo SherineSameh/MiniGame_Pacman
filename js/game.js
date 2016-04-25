@@ -1,7 +1,7 @@
 var Game = function () {};
 
 var player,enemies,Pinky,Blinky,Inkey,Clyde,Dead,
-cursor,
+cursor,lives,
 map,layer1,layer2 , Dots;
 
 Game.prototype = {
@@ -46,7 +46,9 @@ Game.prototype = {
     function () 
     {
         score = 0 ;
-        life=3;
+        // life=3;
+        lives.callAll('revive');
+        player.revive();
         game.state.start("Menu");
     });
 
@@ -146,9 +148,13 @@ Game.prototype = {
     enemies.setAll('body.bounce.x', 1);
     enemies.setAll('body.bounce.y', 1);
 
-    //  The score
-    lifeText = game.add.text(16, 35, 'Life: 3', { fontSize: '20px', fill: '#FAF911' });
+    // Score and Life
     scoreText = game.add.text(16, 10, 'Score: 0', { fontSize: '20px', fill: '#FAF911' });
+    lives = game.add.group();
+    for (var i = 2; i >= 0; i--) 
+    {
+        var Life = lives.create(16+(30 * i), 35, 'Life');
+    }
 
     // keyboard controller
     cursor = game.input.keyboard.createCursorKeys();
@@ -217,25 +223,14 @@ function loose (player,enemy)
 function disapear()
 { 
     Dead.kill();
+    life = lives.getFirstAlive();
+    if (life)
+        life.kill();
 
-    life = life-1;
-    lifeText.text = 'Life    :' + life ;
-
-    if(life == 0){
+    if (lives.countLiving() < 1)
         game.state.start("GameOver");
-    }
     else
-    {
-        player = game.add.sprite(30, 540 , 'pacman');
-        game.physics.arcade.enable(player); //enable physics on the player
-        player.body.collideWorldBounds = true;
-
-        player.animations.add('left', [6, 7, 8], 10, true);
-        player.animations.add('right', [9, 10, 11], 10, true);
-        player.animations.add('top', [0, 1, 2], 10, true);
-        player.animations.add('down', [3, 4, 5], 10, true);
-
-    }
+        player.revive();
 }
 
 function Dotkill (player,Dots ) {
