@@ -238,7 +238,17 @@ function disapear()
         game.state.start("GameOver");
         }
     else
-        player.revive();
+        {
+        player = game.add.sprite(30, 540 , 'pacman');
+        game.physics.arcade.enable(player); //enable physics on the player
+        player.body.collideWorldBounds = true;
+
+        player.animations.add('left', [6, 7, 8], 10, true);
+        player.animations.add('right', [9, 10, 11], 10, true);
+        player.animations.add('top', [0, 1, 2], 10, true);
+        player.animations.add('down', [3, 4, 5], 10, true);
+        // player.revive();
+        }
 }
 
 function Dotkill (player,Dot ) {
