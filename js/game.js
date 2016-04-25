@@ -14,8 +14,9 @@ Game.prototype = {
     game.load.spritesheet('inkey', 'assets/images/inkey.png', 30, 30);
     game.load.spritesheet('clyde', 'assets/images/clyde.png', 30, 30);
     game.load.spritesheet('dead_pacman', 'assets/images/dead_pacman.png', 30, 30);
+
     
-    game.load.image('menu_bar','assets/images/menu_bar.png');
+    game.load.image('white_bg','assets/images/white_bg.png');
     game.load.image('score_label','assets/images/score_label.png');
     game.load.image('back_icon','assets/images/back_icon.png');
     game.load.image('Life','assets/images/life.png');
@@ -39,7 +40,8 @@ Game.prototype = {
 
 },
   create: function () {
- 
+    game.add.sprite(0,0,'white_bg');
+    
     var playMusic = gameOptions.playMusic;
     music.volume = 0.3;
     back = game.add.sprite(745,8.5,'back_icon');
@@ -76,6 +78,7 @@ Game.prototype = {
     });
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
+
 
     map = window._map = game.add.tilemap('myTilemap');
     map.addTilesetImage('tile', 'Tile');
@@ -267,6 +270,4 @@ function Dotkill (player,Dot ) {
         player.revive();
         game.state.start("Win");
     } 
-   
-
 }
