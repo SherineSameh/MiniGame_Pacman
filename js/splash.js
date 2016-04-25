@@ -18,6 +18,7 @@ splash.prototype = {
     game.load.image('highScore','assets/images/highScore_.png');
     
     game.load.image('gameOver','assets/images/gameOver.png');
+    game.load.image('win','assets/images/win.png');
 
     game.load.image('back','assets/images/back.png');
     game.load.spritesheet('play_mute', 'assets/images/play_mute.png', 385, 45);
@@ -29,7 +30,7 @@ splash.prototype = {
     game.load.script('options',  'js/options.js');
     game.load.script('score',  'js/score.js');
     game.load.script('GameOver',  'js/GameOver.js');
-    
+    game.load.script('win',  'js/win.js');
     
   },
   
@@ -40,7 +41,8 @@ splash.prototype = {
     game.state.add("Options",Options);
     game.state.add("Score",Score);
     game.state.add("GameOver",GameOver);
-
+    game.state.add("Win",Win);
+    
       },
 
   create: function () {
