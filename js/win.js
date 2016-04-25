@@ -7,7 +7,7 @@ Win.prototype = {
 
   setTimeout(function () {
       game.state.start("Menu");
-    }, 5000);  
+    }, 2000);  
    
   }
 };
