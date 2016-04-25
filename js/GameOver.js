@@ -6,9 +6,6 @@ GameOver.prototype = {
     game.add.sprite(0, 0, 'gameOver');
     var endLevel = game.add.audio('endlevel');
     endLevel.play();
-    endlevel.loop();
- 
-
   setTimeout(function () {
   		score = 0 ;
 		life=3;
