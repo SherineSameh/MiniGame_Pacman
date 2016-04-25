@@ -34,6 +34,8 @@ Game.prototype = {
     game.load.audio('doteat', 'assets/sounds/doteat.mp3');    
     game.load.audio('pacend', 'assets/sounds/pacend.mp3');
     game.load.audio('endlevel', 'assets/sounds/endlevel.mp3'); 
+    game.load.audio('bonuslife', 'assets/sounds/bonuslife.mp3'); 
+    
 
 },
   create: function () {
@@ -46,7 +48,6 @@ Game.prototype = {
     function () 
     {
         score = 0 ;
-        // life=3;
         lives.callAll('revive');
         player.revive();
         game.state.start("Menu");
@@ -228,22 +229,33 @@ function disapear()
         life.kill();
 
     if (lives.countLiving() < 1)
+        {
+        var endLevel = game.add.audio('endlevel');
+        endLevel.play();
+        score = 0 ;
+        lives.callAll('revive');
+        player.revive();
         game.state.start("GameOver");
+        }
     else
         player.revive();
 }
 
-function Dotkill (player,Dots ) {
+function Dotkill (player,Dot ) {
     var Eatmusic = game.add.audio('doteat');
     Eatmusic.play();
     
-    Dots.kill();
+    Dot.kill();
     score += 10;
     scoreText.text = 'Score: ' + score;
-    //Error must be fixed !!
-    if (Dots.total == 0) 
+    if (Dots.countLiving() == 0) 
     {
-       game.state.start("Win");
+        var Bonus = game.add.audio('bonuslife');
+        Bonus.play();
+        score = 0 ;
+        lives.callAll('revive');
+        player.revive();
+        game.state.start("Win");
     } 
    
 
