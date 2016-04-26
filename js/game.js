@@ -146,7 +146,7 @@ Game.prototype = {
 
     // Score and Life
     game.add.sprite(16,10,'score_label');
-    scoreText = game.add.text(150, 10, '0', { fontSize: '25px', fill: '#FAF911' });
+    scoreText = game.add.text(150, 5, '0', { fontSize: '25px', fill: '#FAF911' });
     lives = game.add.group();
     for (var i = 2; i >= 0; i--) 
     {

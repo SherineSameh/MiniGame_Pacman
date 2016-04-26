@@ -7,13 +7,17 @@
 }
 body
 {
-	padding: 0px;
+	padding-top: 30px;
+	padding-left: 300px;
 	margin: 0px;
-	/*background-color: #000000;*/
 
-	background-image: url(assets\images\pageBg.png);
+	background-color: #000000;
+
+	/*background-image: url('assets/images/pageBg.png');
 	background-attachment:fixed;
 	background-size: cover;
+	*/
     font-family: 'pacFont';
     color: #ffffff;
 }
+
