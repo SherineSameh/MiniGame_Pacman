@@ -4,5 +4,5 @@ Remaining tasks:
 ------------------------------------------------------------------------
 EXTRA:
 ------
-1- many maze levels myriam
+1- many maze levels
 2- different interaction with enemies(eat them /make them transparent)
