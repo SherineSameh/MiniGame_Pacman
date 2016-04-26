@@ -117,7 +117,7 @@ Game.prototype = {
         s.animations.add('right', [4,5], 10, true);
         s.animations.add('top', [0,1], 10, true);
         s.animations.add('down', [2,3], 10, true);
-        s.play('top', 20, true);
+        s.play('down', 20, true);
         s.body.velocity.set(game.rnd.integerInRange(-60, 60), game.rnd.integerInRange(-60, 60));
     }
     for (var i = 0; i < 2; i++)
