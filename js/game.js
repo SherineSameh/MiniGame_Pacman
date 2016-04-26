@@ -2,7 +2,7 @@ var Game = function () {};
 
 var player,enemies,Pinky,Blinky,Inkey,Clyde,Dead,
 cursor,lives,
-map,layer,layer2 ,layer3, Dots;
+map,layer1,layer2 , Dots;
 
 Game.prototype = {
 
@@ -23,11 +23,10 @@ Game.prototype = {
     game.load.spritesheet('play_mute_icon', 'assets/images/play_mute_icon_.png', 40, 40);
     game.load.spritesheet('pause_play_icon', 'assets/images/pause_play_icon.png', 40, 40);
 
-    game.load.tilemap('myTilemap','assets/tilemaps/Pacman-map5.json',  null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('Tile','assets/tilemaps/2.jpg');
+    game.load.tilemap('myTilemap','assets/tilemaps/PacmanMap.json',  null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('Tile','assets/tilemaps/tile.png');
     game.load.image('Dot','assets/tilemaps/dot.png')
-    game.load.image('back','assets/tilemaps/1.jpg')
-  
+
     game.load.audio('doteat', 'assets/sounds/doteat.mp3');    
     game.load.audio('pacend', 'assets/sounds/pacend.mp3');
     game.load.audio('endlevel', 'assets/sounds/endlevel.mp3'); 
@@ -36,8 +35,7 @@ Game.prototype = {
 
 },
   create: function () {
-  //  game.add.sprite(0,0,'white_bg');
-    
+
     var playMusic = gameOptions.playMusic;
     music.volume = 0.3;
     back = game.add.sprite(745,8.5,'back_icon');
@@ -74,34 +72,24 @@ Game.prototype = {
     });
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
-
-
     
+    game.stage.backgroundColor = '#000000';
+
     map = window._map = game.add.tilemap('myTilemap');
-    map.addTilesetImage('background', 'back');
     map.addTilesetImage('tile', 'Tile');
     map.addTilesetImage('dots', 'Dot');
-    map.setCollision(1 , false , layer );
-    map.setCollision(2 , true  , layer2 );
-    map.setCollision(3 , true  , layer3 ); // 1 is the gid  
+    map.setCollision(1 , true , layer1 );
+    map.setCollision(2 , true , layer2 ); // 1 is the gid  
     layer = map.createLayer('Tile Layer 1');          
     layer.resizeWorld();          
     layer.debug = true;
     layer2 = map.createLayer('Tile Layer 2');          
-    layer.resizeWorld();          
-    layer.debug = true;
-    layer3 = map.createLayer('Tile Layer 3');
+      
     Dots = game.add.physicsGroup();
     //map.safetile;
-    map.createFromTiles(3,1, 'Dot', layer3, Dots); // check parameters 
+    map.createFromTiles(2,255, 'Dot', layer2, Dots); // check parameters 
     Dots.setAll('x', 6, false, false, 1);
     Dots.setAll('y', 6, false, false, 1);
-
-    Tiles = game.add.physicsGroup();
-    //map.safetile;
-    map.createFromTiles(2 ,2 , 'Tile', layer2, Tiles); // check parameters 
-    Tiles.setAll('x', 6, false, false, 1);
-    Tiles.setAll('y', 6, false, false, 1);
 
     //Player:
     player = game.add.sprite(30, 540, 'pacman');
@@ -173,8 +161,8 @@ Game.prototype = {
 
 update: function() {
     
-    game.physics.arcade.collide(player , Tiles ); //Collide the player with the platform
-    game.physics.arcade.collide(enemies, Tiles);
+    game.physics.arcade.collide(player, layer); //Collide the player with the platform
+    game.physics.arcade.collide(enemies, layer);
     game.physics.arcade.overlap(player, enemies, loose, null, this); //Collide the player with enemies and loose
     game.physics.arcade.overlap(player, Dots, Dotkill , null, this);
     game.physics.arcade.collide(enemies);
@@ -277,10 +265,4 @@ function Dotkill (player,Dot ) {
         player.revive();
         game.state.start("Win");
     } 
-} 
-
-function stop(player){
-
-    player.body.velocity.x=0;
-    player.body.velocity.y=0;
 }

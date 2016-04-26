@@ -29,7 +29,7 @@ splash.prototype = {
     game.load.script('menu',  'js/menu.js');
     game.load.script('options',  'js/options.js');
     game.load.script('score',  'js/score.js');
-    game.load.script('GameOver',  'js/GameOver.js');
+    game.load.script('gameOver',  'js/gameOver.js');
     game.load.script('win',  'js/win.js');
     
   },
