@@ -10,17 +10,6 @@ https://www.fontsquirrel.com/tools/webfont-generator
 -------------
 http://www.playonloop.com/music-loops-category/videogame/page/2/
 
-tutorials:
-----------
-1- !! http://phaser.io/tutorials/making-your-first-phaser-game/index
-2-http://www.masswerk.at/JavaPac/pacman-howto.html
-3-https://www.youtube.com/watch?v=VhgqYw6h9Bg&index=6&list=PL9iYZZWgVwsfd3z_wowmPYNOLOkqTvTRd
-4-https://www.youtube.com/watch?v=HBALBdA18_M&list=PL9ILJIvJMrfwlGNmwdq-zZtFgRtLzuPSb&index=8
-
-!!!Maze Generation code :
--------------------------
-http://codepen.io/codevinsky/pen/hgtud
-
 Phaser cheatsheet:
 -------------------
 http://phaser.io/news/2015/12/phaser244-cheatsheet

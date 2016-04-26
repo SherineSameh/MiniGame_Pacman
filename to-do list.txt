@@ -1,7 +1,5 @@
 Remaining tasks:
 ----------------
-1- fix enemies moves
-2- fix maze
 3- db and top ten panel
 ------------------------------------------------------------------------
 EXTRA:

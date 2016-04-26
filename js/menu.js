@@ -13,9 +13,9 @@ Menu.prototype = {
           game.state.start("Game");
     });
 
-    options= game.add.sprite(250,390,'options');
+    options= game.add.sprite(200,390,'options');
     options.inputEnabled = true;
-    options.events.onInputUp.add(function () {
+    options.events.onInputUp.add(function (){
         game.state.start("Options");
     });
     

@@ -2,7 +2,7 @@ var Game = function () {};
 
 var player,enemies,Pinky,Blinky,Inkey,Clyde,Dead,
 cursor,lives,
-map,layer1,layer2 , Dots;
+map,layer1,layer2,Dots;
 
 Game.prototype = {
 
@@ -15,7 +15,6 @@ Game.prototype = {
     game.load.spritesheet('clyde', 'assets/images/clyde.png', 30, 30);
     game.load.spritesheet('dead_pacman', 'assets/images/dead_pacman.png', 30, 30);
 
-    
     game.load.image('white_bg','assets/images/white_bg.png');
     game.load.image('score_label','assets/images/score_label.png');
     game.load.image('back_icon','assets/images/back_icon.png');
@@ -23,27 +22,20 @@ Game.prototype = {
     game.load.spritesheet('play_mute_icon', 'assets/images/play_mute_icon_.png', 40, 40);
     game.load.spritesheet('pause_play_icon', 'assets/images/pause_play_icon.png', 40, 40);
 
-    game.load.tilemap('myTilemap','assets/tilemaps/Pacman-Map4.json',  null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('myTilemap','assets/tilemaps/PacmanMap.json',  null, Phaser.Tilemap.TILED_JSON);
     game.load.image('Tile','assets/tilemaps/tile.png');
     game.load.image('Dot','assets/tilemaps/dot.png')
-
-    game.load.tilemap('myTilemap','assets/tilemaps/Pacman-Map4.json',  null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('Tile','assets/tilemaps/tile.png');
-    game.load.image('Dot','assets/tilemaps/dot.png');
-    game.load.image('black','assets/tilemaps/black_tile.png');
-
+    game.load.image('Bg','assets/tilemaps/bg.png')
+   
     game.load.audio('doteat', 'assets/sounds/doteat.mp3');    
     game.load.audio('pacend', 'assets/sounds/pacend.mp3');
     game.load.audio('endlevel', 'assets/sounds/endlevel.mp3'); 
     game.load.audio('bonuslife', 'assets/sounds/bonuslife.mp3'); 
-    
-
 },
   create: function () {
-    game.add.sprite(0,0,'white_bg');
     
     var playMusic = gameOptions.playMusic;
-    music.volume = 0.3;
+
     back = game.add.sprite(745,8.5,'back_icon');
     back.inputEnabled = true;
     back.events.onInputUp.add(
@@ -79,26 +71,26 @@ Game.prototype = {
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
+    game.stage.backgroundColor = '#000000';
 
     map = window._map = game.add.tilemap('myTilemap');
-    map.addTilesetImage('tile', 'Tile');
+    
+    map.addTilesetImage('bg', 'Bg');
     map.addTilesetImage('dots', 'Dot');
+    map.addTilesetImage('tile', 'Tile');
+    
     map.setCollision(1 , true , layer1 );
-    map.setCollision(2 , true , layer2 ); // 1 is the gid  
-    layer = map.createLayer('Tile Layer 1');          
-    layer.resizeWorld();          
-    layer.debug = true;
-    layer2 = map.createLayer('Tile Layer 2');          
-      
-    Dots = game.add.physicsGroup();
-    //map.safetile;
-    map.createFromTiles(2,255, 'Dot', layer2, Dots); // check parameters 
-    Dots.setAll('x', 6, false, false, 1);
-    Dots.setAll('y', 6, false, false, 1);
+    map.setCollision(2 , true , layer2 );
+    
+    layer1 = map.createLayer('Tile Layer 1');              
+    layer2 = map.createLayer('Tile Layer 2');             
 
+    Dots = game.add.physicsGroup();
+    map.createFromTiles(2,0,'Dot', layer2, Dots);
+    
     //Player:
     player = game.add.sprite(30, 540, 'pacman');
-    game.physics.arcade.enable(player); //enable physics on the player
+    game.physics.arcade.enable(player);
     player.body.collideWorldBounds = true;
 
     player.animations.add('left', [6, 7, 8], 10, true);
@@ -116,7 +108,7 @@ Game.prototype = {
         s.animations.add('top', [0,1], 10, true);
         s.animations.add('down', [2,3], 10, true);
         s.play('down', 20, true);
-        s.body.velocity.set(game.rnd.integerInRange(-50, 50), game.rnd.integerInRange(-50, 50));
+        s.body.velocity.set(game.rnd.integerInRange(-60, 60), game.rnd.integerInRange(-60, 60));
     }
     for (var i = 0; i < 2; i++)
     {
@@ -126,7 +118,7 @@ Game.prototype = {
         s.animations.add('top', [0,1], 10, true);
         s.animations.add('down', [2,3], 10, true);
         s.play('top', 20, true);
-        s.body.velocity.set(game.rnd.integerInRange(-50, 50), game.rnd.integerInRange(-50, 50));
+        s.body.velocity.set(game.rnd.integerInRange(-60, 60), game.rnd.integerInRange(-60, 60));
     }
     for (var i = 0; i < 2; i++)
     {
@@ -136,7 +128,7 @@ Game.prototype = {
         s.animations.add('top', [0,1], 10, true);
         s.animations.add('down', [2,3], 10, true);
         s.play('down', 20, true);
-        s.body.velocity.set(game.rnd.integerInRange(-50, 50), game.rnd.integerInRange(-50, 50));
+        s.body.velocity.set(game.rnd.integerInRange(-60, 60), game.rnd.integerInRange(-60, 60));
     }
     for (var i = 0; i < 2; i++)
     {
@@ -153,7 +145,8 @@ Game.prototype = {
     enemies.setAll('body.bounce.y', 1);
 
     // Score and Life
-    scoreText = game.add.text(16, 10, 'Score: 0', { fontSize: '20px', fill: '#FAF911' });
+    game.add.sprite(16,10,'score_label');
+    scoreText = game.add.text(150, 10, '0', { fontSize: '25px', fill: '#FAF911' });
     lives = game.add.group();
     for (var i = 2; i >= 0; i--) 
     {
@@ -166,9 +159,9 @@ Game.prototype = {
 
 update: function() {
     
-    game.physics.arcade.collide(player, layer); //Collide the player with the platform
-    game.physics.arcade.collide(enemies, layer);
-    game.physics.arcade.overlap(player, enemies, loose, null, this); //Collide the player with enemies and loose
+    game.physics.arcade.collide(player, layer1); 
+    game.physics.arcade.collide(enemies, layer1);
+    game.physics.arcade.overlap(player, enemies, loose, null, this);
     game.physics.arcade.overlap(player, Dots, Dotkill , null, this);
     game.physics.arcade.collide(enemies);
     //initialize the movement
@@ -243,14 +236,13 @@ function disapear()
     else
         {
         player = game.add.sprite(30, 540 , 'pacman');
-        game.physics.arcade.enable(player); //enable physics on the player
+        game.physics.arcade.enable(player);
         player.body.collideWorldBounds = true;
 
         player.animations.add('left', [6, 7, 8], 10, true);
         player.animations.add('right', [9, 10, 11], 10, true);
         player.animations.add('top', [0, 1, 2], 10, true);
         player.animations.add('down', [3, 4, 5], 10, true);
-        // player.revive();
         }
 }
 
@@ -260,7 +252,7 @@ function Dotkill (player,Dot ) {
     
     Dot.kill();
     score += 10;
-    scoreText.text = 'Score: ' + score;
+    scoreText.text = score;
     if (Dots.countLiving() == 0) 
     {
         var Bonus = game.add.audio('bonuslife');

@@ -51,6 +51,7 @@ splash.prototype = {
     music = game.add.audio('intro');
     music.loop = true;
     music.play();
+    music.volume = 0.3;
     this.addGameStates();
     
     setTimeout(function () {
