@@ -56,7 +56,7 @@ splash.prototype = {
     
     setTimeout(function () {
       game.state.start("Menu");
-    }, 500);    
+    }, 2000);    
   }
  };
 
