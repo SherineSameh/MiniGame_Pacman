@@ -8,29 +8,7 @@ Game.prototype = {
 
   preload: function () {
     
-    game.load.spritesheet('pacman', 'assets/images/pacman.png', 30, 30);
-    game.load.spritesheet('pinky', 'assets/images/pinky.png', 30, 30);
-    game.load.spritesheet('blinky', 'assets/images/blinky.png', 30, 30);
-    game.load.spritesheet('inkey', 'assets/images/inkey.png', 30, 30);
-    game.load.spritesheet('clyde', 'assets/images/clyde.png', 30, 30);
-    game.load.spritesheet('dead_pacman', 'assets/images/dead_pacman.png', 30, 30);
-
-    game.load.image('white_bg','assets/images/white_bg.png');
-    game.load.image('score_label','assets/images/score_label.png');
-    game.load.image('back_icon','assets/images/back_icon.png');
-    game.load.image('Life','assets/images/life.png');
-    game.load.spritesheet('play_mute_icon', 'assets/images/play_mute_icon_.png', 40, 40);
-    game.load.spritesheet('pause_play_icon', 'assets/images/pause_play_icon.png', 40, 40);
-
-    game.load.tilemap('myTilemap','assets/tilemaps/PacmanMap.json',  null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('Tile','assets/tilemaps/tile.png');
-    game.load.image('Dot','assets/tilemaps/dot.png')
-    game.load.image('Bg','assets/tilemaps/bg.png')
-   
-    game.load.audio('doteat', 'assets/sounds/doteat.mp3');    
-    game.load.audio('pacend', 'assets/sounds/pacend.mp3');
-    game.load.audio('endlevel', 'assets/sounds/endlevel.mp3'); 
-    game.load.audio('bonuslife', 'assets/sounds/bonuslife.mp3'); 
+    
 },
   create: function () {
     
