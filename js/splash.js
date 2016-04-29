@@ -13,12 +13,12 @@ splash.prototype = {
 
     game.load.image('bg','assets/images/bg.png');
     game.load.image('menuBg','assets/images/menuBg.png');
-    game.load.image('newGame','assets/images/NewGame_.png');
+    game.load.image('newGame','assets/images/newGame_.png');
     game.load.image('options','assets/images/options_.png');
     game.load.image('highScore','assets/images/highScore_.png');
     
     game.load.image('gameOver','assets/images/gameOver.png');
-    game.load.image('win','assets/images/win.png');
+    game.load.image('win','assets/images/Win.png');
 
     game.load.image('back','assets/images/back.png');
     game.load.spritesheet('play_mute', 'assets/images/play_mute.png', 385, 45);
