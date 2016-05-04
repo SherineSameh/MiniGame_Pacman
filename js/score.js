@@ -18,9 +18,6 @@ Score.prototype = {
       back.events.onInputUp.add(
       function () 
       {
-      //   score = 0 ;
-      //   lives.callAll('revive');
-      //   player.revive();
         game.state.start("Menu");
       });
    
