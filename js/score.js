@@ -1,21 +1,35 @@
 var Score = function() {};
 
 Score.prototype = {
-  init: function()
-  {
+  // init: function()
+  // {
 
-  },
-  preload: function()
-  {
+  // },
+  // preload: function()
+  // {
 
-  },
+  // },
   create: function () 
   {
+     game.add.sprite(0, 0, 'errorPage');
 
-  },
-  update: function() 
-  {
+      back = game.add.sprite(745,8.5,'back_icon');
+      back.inputEnabled = true;
+      back.events.onInputUp.add(
+      function () 
+      {
+        score = 0 ;
+        lives.callAll('revive');
+        player.revive();
+        game.state.start("Menu");
+      });
+   
 
-  }
+   }
+  // ,
+  // update: function() 
+  // {
+
+  // }
 };
 
