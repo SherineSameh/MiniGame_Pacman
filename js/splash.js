@@ -14,7 +14,8 @@ splash.prototype = {
     game.load.image('gameOver','assets/images/gameOver.png');
     game.load.image('win','assets/images/Win.png');
     game.load.image('back','assets/images/back.png');
-    
+    game.load.image('errorPage','assets/images/404.png');
+
     game.load.spritesheet('play_mute', 'assets/images/play_mute.png', 385, 45);
     game.load.spritesheet('play_mute_icon', 'assets/images/play_mute_icon_.png', 40, 40);
     game.load.spritesheet('pause_play_icon', 'assets/images/pause_play_icon.png', 40, 40);
@@ -39,7 +40,6 @@ splash.prototype = {
     game.load.image('Bg','assets/tilemaps/bg.png')
    
 
-    game.load.audio('intro','assets/sounds/intro.wav');
     game.load.audio('doteat', 'assets/sounds/doteat.mp3');    
     game.load.audio('pacend', 'assets/sounds/pacend.mp3');
     game.load.audio('endlevel', 'assets/sounds/endlevel.mp3'); 
@@ -63,15 +63,11 @@ splash.prototype = {
 
   create: function () {
     
-    music = game.add.audio('intro');
-    music.loop = true;
-    music.play();
-    music.volume = 0.3;
     this.addGameStates();
     
     setTimeout(function () {
       game.state.start("Menu");
-    }, 1000);    
+    }, 100);    
   }
  };
 
